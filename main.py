@@ -1,5 +1,8 @@
 import logging
+import os
 import sys
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from telegram.ext import (
     ApplicationBuilder,
     CommandHandler,
@@ -20,12 +23,39 @@ logging.basicConfig(
 )
 logger = logging.getLogger("CurrencyBot")
 
+class RailwayHealthHandler(BaseHTTPRequestHandler):
+    """Answers Railway's HTTP health checks so the deployment stays active."""
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"OK: Currency Converter Bot is running!")
+
+    def log_message(self, format, *args):
+        pass  # Suppress repetitive HTTP health check logs
+
+def start_health_check_server():
+    """Starts a minimal background HTTP server if Railway sets a PORT environment variable."""
+    port_str = os.getenv("PORT")
+    if port_str:
+        try:
+            port = int(port_str)
+            server = HTTPServer(("0.0.0.0", port), RailwayHealthHandler)
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            logger.info(f"Railway HTTP health-check server running on port {port}")
+        except Exception as e:
+            logger.warning(f"Failed to start health check server: {e}")
+
 def main():
     token = config.TELEGRAM_TOKEN
     if not token or token == "your_telegram_bot_token_here":
         logger.error("TELEGRAM_TOKEN is missing or not configured in .env file!")
         print("\n[ERROR] TELEGRAM_TOKEN is not set in .env! Please set it before running.\n")
         sys.exit(1)
+
+    # Start health check server for Railway if PORT is provided
+    start_health_check_server()
 
     logger.info("Initializing Currency Converter Bot...")
     app = ApplicationBuilder().token(token).build()

@@ -9,10 +9,10 @@ BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 
 # Telegram Configuration
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "").strip()
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "8522836537:AAFBrkNfi0jjZDnghIAegFTIDjCDRXIfY38").strip()
 
 # Currency API Configuration
-EXCHANGE_API_KEY = os.getenv("EXCHANGE_API_KEY", "").strip()
+EXCHANGE_API_KEY = os.getenv("EXCHANGE_API_KEY", "687824ff6db700793b0a58a6").strip()
 PRIMARY_API_BASE = f"https://v6.exchangerate-api.com/v6/{EXCHANGE_API_KEY}" if EXCHANGE_API_KEY else ""
 BACKUP_API_BASE = "https://open.er-api.com/v6"
 
