@@ -49,10 +49,7 @@ def start_health_check_server():
 
 def main():
     token = config.TELEGRAM_TOKEN
-    if not token or token == "your_telegram_bot_token_here":
-        logger.error("TELEGRAM_TOKEN is missing or not configured in .env file!")
-        print("\n[ERROR] TELEGRAM_TOKEN is not set in .env! Please set it before running.\n")
-        sys.exit(1)
+    logger.info(f"Loaded bot token: {token[:8]}... (length: {len(token)})")
 
     # Start health check server for Railway if PORT is provided
     start_health_check_server()

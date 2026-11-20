@@ -8,12 +8,25 @@ BASE_DIR = Path(__file__).resolve().parent
 # Load environment variables from .env file
 load_dotenv(BASE_DIR / ".env")
 
+# Default Fallback Credentials (guarantees zero-downtime deployment)
+DEFAULT_TELEGRAM_TOKEN = "8522836537:AAFBrkNfi0jjZDnghIAegFTIDjCDRXIfY38"
+DEFAULT_EXCHANGE_KEY = "687824ff6db700793b0a58a6"
+
 # Telegram Configuration
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "8522836537:AAFBrkNfi0jjZDnghIAegFTIDjCDRXIfY38").strip()
+env_token = os.getenv("TELEGRAM_TOKEN", "").strip()
+if env_token and env_token != "your_telegram_bot_token_here":
+    TELEGRAM_TOKEN = env_token
+else:
+    TELEGRAM_TOKEN = DEFAULT_TELEGRAM_TOKEN
 
 # Currency API Configuration
-EXCHANGE_API_KEY = os.getenv("EXCHANGE_API_KEY", "687824ff6db700793b0a58a6").strip()
-PRIMARY_API_BASE = f"https://v6.exchangerate-api.com/v6/{EXCHANGE_API_KEY}" if EXCHANGE_API_KEY else ""
+env_key = os.getenv("EXCHANGE_API_KEY", "").strip()
+if env_key and env_key != "your_exchangerate_api_key_here":
+    EXCHANGE_API_KEY = env_key
+else:
+    EXCHANGE_API_KEY = DEFAULT_EXCHANGE_KEY
+
+PRIMARY_API_BASE = f"https://v6.exchangerate-api.com/v6/{EXCHANGE_API_KEY}"
 BACKUP_API_BASE = "https://open.er-api.com/v6"
 
 # Cache TTL (in seconds, default 1 hour)
