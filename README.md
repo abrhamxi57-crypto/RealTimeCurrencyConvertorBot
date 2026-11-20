@@ -1,4 +1,4 @@
-# SE_python_project2025
+
 
 # 💱 Currency Converter Telegram Bot
 
@@ -334,7 +334,8 @@ Possible future upgrades:
 
 # 📸 Screenshots
 
-![image for bot username](image.png)
+<img width="399" height="379" alt="image" src="https://github.com/user-attachments/assets/7c7fc05d-1f32-4862-ac17-0c38ede108ec" />
+
 
 Example:
 
