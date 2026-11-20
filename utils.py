@@ -1,26 +1,17 @@
-import json
-import os
-import requests
+"""Backward compatibility layer for legacy imports of utils.py."""
 
-EXCHANGE_API_KEY = "687824ff6db700793b0a58a6"
-BASE_URL = f"https://v6.exchangerate-api.com/v6/{EXCHANGE_API_KEY}"
+import config
+from services.storage_service import StorageService
+from services.currency_service import CurrencyService
+
+EXCHANGE_API_KEY = config.EXCHANGE_API_KEY
+BASE_URL = config.PRIMARY_API_BASE
 
 def load_json(path):
-    if not os.path.exists(path):
-        return {}
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
-        return {}
+    return StorageService.load_json(path, {})
 
 def save_json(path, data):
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
+    return StorageService.save_json(path, data)
 
 def get_rates(base):
-    try:
-        r = requests.get(f"{BASE_URL}/latest/{base}", timeout=10)
-        return r.json()
-    except:
-        return None
+    return CurrencyService.get_rates(base)

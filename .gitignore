@@ -1,0 +1,26 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache & build files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Environment files with sensitive credentials
+.env
+
+# Data files (keep .gitkeep in data/)
+data/*.json
+!data/.gitkeep
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
+*.backup
+archive/

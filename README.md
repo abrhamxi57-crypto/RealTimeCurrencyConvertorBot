@@ -222,11 +222,68 @@ This method is used only as a last resort.
 1. User sends command in Telegram
 2. Telegram Bot API receives message
 3. Python bot processes request
-4. API fetches exchange rates
+4. API / Cache fetches exchange rates
 5. Bot calculates result
 6. Result is returned to the user
 
+## 📂 Project Directory Structure
+
+```text
+RealTimeCurrencyConvertorBot/
+├── .env.example              # Environment variables template
+├── .env                      # Local environment configuration (API keys & bot token)
+├── .gitignore                # Git ignore rules for virtualenv, secrets, cache
+├── requirements.txt          # Python project dependencies
+├── README.md                 # Project documentation
+├── main.py                   # Bot entry point and polling service
+├── config.py                 # Central configuration and environment loader
+├── data/                     # Local storage directory
+│   ├── history.json          # User conversion history
+│   ├── feedback.json         # User feedback log
+│   ├── favorites.json        # Favorite currency pairs per user
+│   └── rates_cache.json      # Offline rates cache with TTL
+├── services/                 # Core business and integration services
+│   ├── __init__.py
+│   ├── storage_service.py    # Thread-safe JSON data storage service
+│   └── currency_service.py   # Live API integration, failover & caching
+└── handlers/                 # Modular Telegram bot handlers
+    ├── __init__.py
+    ├── commands.py           # /start, /help, /convert, /rates
+    ├── callbacks.py          # Inline buttons (rates & favorites interaction)
+    ├── messages.py           # Menu buttons and conversational message flow
+    ├── favorites.py          # Favorite currency pair management
+    └── keyboards.py          # Reply and inline keyboard builders
 ```
+
+## 🚀 Setup and Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/abrhamxi/SE_python_project2025.git
+   cd RealTimeCurrencyConvertorBot
+   ```
+
+2. **Create and activate a virtual environment:**
+   ```bash
+   virtualenv .venv
+   source .venv/bin/activate
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure environment variables:**
+   ```bash
+   cp .env.example .env
+   # Edit .env and insert your TELEGRAM_TOKEN and EXCHANGE_API_KEY
+   ```
+
+5. **Run the bot:**
+   ```bash
+   python main.py
+   ```
 
 # 🗓️ Development Plan
 
