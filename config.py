@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 
 # Default Fallback Credentials (guarantees zero-downtime deployment)
-DEFAULT_TELEGRAM_TOKEN = "8522836537:AAFBrkNfi0jjZDnghIAegFTIDjCDRXIfY38"
+DEFAULT_TELEGRAM_TOKEN = "9217502077:AAEXNnJEYU44plfSN3T44_JSTu-TK-Y1ha0"
 DEFAULT_EXCHANGE_KEY = "687824ff6db700793b0a58a6"
 
 # Telegram Configuration
